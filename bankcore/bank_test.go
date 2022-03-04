@@ -51,3 +51,40 @@ func TestDepositInvalid(t *testing.T) {
 		t.Error("only positive numbers should be allowed to deposit")
 	}
 }
+
+func TestWithdraw(t *testing.T) {
+	account := Account{
+		Customer: Customer{
+			Name:    "John",
+			Address: "Los Angeles, California",
+			Phone:   "(213) 555 0147",
+		},
+		Number:  1001,
+		Balance: 0,
+	}
+
+	account.Deposit(10)
+	account.Withdraw(10)
+
+	if account.Balance != 0 {
+		t.Error("balance is not being updated after withdraw")
+	}
+}
+
+func TestStatement(t *testing.T) {
+	account := Account{
+		Customer: Customer{
+			Name:    "John",
+			Address: "Los Angeles, California",
+			Phone:   "(213) 555 0147",
+		},
+		Number:  1001,
+		Balance: 0,
+	}
+
+	account.Deposit(100)
+	statement := account.Statement()
+	if statement != "1001 - John - 100" {
+		t.Error("statement doesn't have the proper format")
+	}
+}
