@@ -35,3 +35,19 @@ func TestDeposit(t *testing.T) {
 		t.Error("balance is not being updated after a deposit")
 	}
 }
+
+func TestDepositInvalid(t *testing.T) {
+	account := Account{
+		Customer: Customer{
+			Name:    "Jane",
+			Address: "Dallas, Texas",
+			Phone:   "(214) 555 2314",
+		},
+		Number:  1001,
+		Balance: 0,
+	}
+
+	if err := account.Deposit(-1); err == nil {
+		t.Error("only positive numbers should be allowed to deposit")
+	}
+}
